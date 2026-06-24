@@ -37,7 +37,10 @@ export default function Layout() {
         <div className="nav-inner">
           <Link to="/" className="nav-brand">
             <img src="/favicon.png" alt="" className="nav-mark" />
-            <span>YiChin Lew</span>
+            <span className="nav-brand-name">
+              <span>YiChin</span>
+              <span>Lew</span>
+            </span>
           </Link>
           <nav className="nav-links">
             <a href="/#builds" onClick={scrollToSection('builds')}>Builds</a>

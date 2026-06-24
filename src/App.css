@@ -77,6 +77,8 @@
   color: #3e8382;
 }
 
+.nav-brand-name { display: inline; }
+
 @media (max-width: 760px) {
   .nav-inner { gap: 12px; }
   .nav-brand { font-size: 15px; gap: 8px; }
@@ -84,8 +86,17 @@
   .nav-links { gap: 14px; font-size: 13px; }
 }
 @media (max-width: 420px) {
-  .nav-brand { font-size: 13px; gap: 6px; }
-  .nav-mark { width: 20px; height: 20px; }
+  .nav-brand {
+    font-size: 13px;
+    gap: 7px;
+    line-height: 1.05;
+  }
+  .nav-mark { width: 28px; height: 28px; }
+  .nav-brand-name {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .nav-links { gap: 10px; font-size: 12px; }
 }
 
