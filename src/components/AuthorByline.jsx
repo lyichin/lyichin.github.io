@@ -3,7 +3,7 @@ import CopyEmail from './CopyEmail'
 export default function AuthorByline() {
   return (
     <div className="byline">
-      by YiChin Lew.{' '}
+      <span className="byline-name">by YiChin Lew.</span>
       <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
       <span className="sep"> · </span>
       <a href="https://www.linkedin.com/in/yichinlew" target="_blank" rel="noreferrer">LinkedIn</a>

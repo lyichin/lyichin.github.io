@@ -42,7 +42,7 @@ export default function Home() {
 
       <section className="section" id="notes">
         <div className="container">
-          <h2 className="section-title">Notes</h2>
+          <h2 className="section-title">Latest Notes</h2>
           <div className="notes-list">
             {posts.slice(0, 3).map((p) => (
               <article key={p.slug} className="note-row">
@@ -54,11 +54,9 @@ export default function Home() {
               </article>
             ))}
           </div>
-          {posts.length > 3 && (
-            <div className="notes-more">
-              <Link to="/notes">View all notes →</Link>
-            </div>
-          )}
+          <div className="notes-more">
+            <Link to="/notes">View all notes →</Link>
+          </div>
         </div>
       </section>
     </>

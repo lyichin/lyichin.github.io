@@ -7,7 +7,8 @@
   --rule: #e5e5e0;
   --card-bg: #f3f3ee;
   --card-active-bg: #e9e9e2;
-  --accent: #b85c38;
+  --accent: #3e8382;
+  --link: #1155cc;
 
   /* Layout */
   --max-width: 960px;
@@ -17,7 +18,7 @@
   /* Font stacks */
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-ui: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Spectral', Georgia, 'Iowan Old Style', serif;
 
   color-scheme: light;

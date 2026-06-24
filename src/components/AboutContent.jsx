@@ -7,6 +7,10 @@ export default function AboutContent() {
         <div className="about-text">
           <p>I'm YiChin.</p>
 
+          <p className="about-currently">
+            Currently leading product for enterprise AI and data systems at a global enterprise software company.
+          </p>
+
           <p>
             I think in systems. I naturally start building a map when I encounter a
             problem: people, processes, data, decisions, and the wires between

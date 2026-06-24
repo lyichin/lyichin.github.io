@@ -18,11 +18,11 @@ export default function Builds() {
               aria-expanded={isOpen}
               onClick={() => setOpenId(isOpen ? '' : b.id)}
             >
-              <div className="build-title">{b.title}</div>
-              <div className="build-outcome">
-                {b.outcome}
-                <span className="arrow" aria-hidden="true">↗</span>
+              <div>
+                <div className="build-title">{b.title}</div>
+                <div className="build-outcome">{b.outcome}</div>
               </div>
+              <span className="build-arrow" aria-hidden="true">↗</span>
             </button>
             {isOpen && (
               <div className="build-story">

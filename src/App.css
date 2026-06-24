@@ -45,10 +45,19 @@
   text-decoration: none;
   letter-spacing: -0.01em;
   color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .nav-brand:hover {
-  color: var(--text);
+  color: #2e6464;
   text-decoration: none;
+}
+.nav-mark {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  display: block;
 }
 .nav-links {
   display: flex;
@@ -63,7 +72,7 @@
 }
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--text);
+  color: #3e8382;
 }
 
 /* ---------- Footer ---------- */
@@ -83,11 +92,11 @@
 }
 .hero h1 {
   font-family: var(--font-display);
-  font-size: 64px;
+  font-size: 52px;
   line-height: 1.05;
   letter-spacing: -0.025em;
   margin-bottom: 20px;
-  font-weight: 700;
+  font-weight: 400;
 }
 .hero-subtitle {
   font-family: var(--font-body);
@@ -99,9 +108,9 @@
 }
 .hero-tags {
   font-family: var(--font-ui);
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0.04em;
-  color: var(--text-muted);
+  color: #3e8382;
   font-weight: 500;
 }
 
@@ -141,39 +150,50 @@
   grid-template-columns: 1fr;
 }
 .build-trigger {
-  width: 100%;
-  font-family: var(--font-body);
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-family: var(--font-ui);
   cursor: pointer;
+  max-width: 100%;
 }
+.build-trigger > div { display: inline-block; }
 .build-title {
-  font-family: var(--font-heading);
+  font-family: var(--font-ui);
   font-size: 22px;
   line-height: 1.3;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text);
+  transition: color 120ms ease;
 }
+.build-trigger:hover .build-title,
+.build-trigger[aria-expanded="true"] .build-title { color: #3e8382; }
 .build-outcome {
   margin-top: 8px;
   margin-left: 24px;
-  font-family: var(--font-body);
-  font-size: 16px;
+  font-family: var(--font-ui);
+  font-size: 15px;
   color: var(--text-muted);
   font-style: italic;
+  font-weight: 500;
+  font-synthesis: style;
 }
-.build-outcome .arrow {
-  margin-left: 10px;
+.build-arrow {
   font-style: normal;
   color: var(--text-faint);
   transition: color 120ms ease, transform 200ms ease;
   display: inline-block;
   font-family: var(--font-ui);
+  font-size: 22px;
+  line-height: 1.3;
+  align-self: start;
 }
-.build-trigger[aria-expanded="true"] .arrow,
-.build-trigger:hover .arrow {
-  color: var(--accent);
+.build-trigger[aria-expanded="true"] .build-arrow,
+.build-trigger:hover .build-arrow {
+  color: #3e8382;
 }
-.build-trigger[aria-expanded="true"] .arrow {
+.build-trigger[aria-expanded="true"] .build-arrow {
   transform: rotate(45deg);
 }
 .build-story {
@@ -216,6 +236,8 @@
 .expertise-card[aria-expanded="true"] {
   background: var(--card-active-bg);
 }
+.expertise-card[aria-expanded="true"] .expertise-name { color: #3e8382; }
+.expertise-card:hover .expertise-name { color: #3e8382; }
 .expertise-num {
   font-family: var(--font-ui);
   font-size: 13px;
@@ -233,18 +255,18 @@
   font-family: var(--font-body);
   font-size: 14.5px;
   line-height: 1.5;
-  color: var(--text-muted);
-  font-style: italic;
+  color: var(--text);
+  font-style: normal;
 }
 .expertise-outcome {
   font-family: var(--font-ui);
   font-size: 12px;
-  color: var(--text);
+  color: var(--text-faint);
   margin-top: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 6px;
   font-weight: 500;
 }
 .expertise-outcome .arrow {
@@ -258,22 +280,20 @@
   transform: rotate(45deg);
 }
 
-/* Tiny chevrons between cards */
+/* Tiny chevrons centered in each gap between cards */
 .expertise-flow {
   position: absolute;
   pointer-events: none;
   inset: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
 }
 .flow-marker {
-  align-self: center;
-  justify-self: start;
+  position: absolute;
+  top: 48px;
   color: var(--text-faint);
   font-size: 18px;
   font-family: var(--font-ui);
-  margin-left: -10px;
   font-weight: 300;
+  transform: translateX(-50%);
 }
 
 .expertise-panel {
@@ -318,6 +338,11 @@
   line-height: 1.7;
 }
 .about-text p { margin: 0 0 1.1em 0; }
+.about-text p.about-currently {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 16px;
+}
 .about-photo img {
   width: 200px;
   height: 200px;
@@ -334,9 +359,15 @@
 }
 .about-links a, .about-links .copy-email {
   margin-right: 0;
+  color: #1155cc;
+  text-decoration-color: #1155cc;
+}
+.about-links a:hover, .about-links .copy-email:hover {
+  color: #3e8382;
+  text-decoration-color: #3e8382;
 }
 .about-links .sep {
-  margin: 0 10px;
+  margin: 0 4px;
   color: var(--text-faint);
 }
 
@@ -384,7 +415,6 @@
   text-decoration: none;
   display: block;
 }
-.note-row a:hover .note-title { color: var(--accent); }
 .note-meta {
   font-family: var(--font-ui);
   font-size: 12px;
@@ -395,15 +425,16 @@
   font-weight: 500;
 }
 .note-title {
-  font-family: var(--font-heading);
+  font-family: var(--font-ui);
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 6px;
   line-height: 1.3;
   color: var(--text);
   transition: color 120ms ease;
 }
+.note-row a:hover .note-title { color: #3e8382; }
 .note-excerpt {
   font-family: var(--font-body);
   color: var(--text-muted);
@@ -520,22 +551,27 @@
   border-top: 1px solid var(--rule);
   font-family: var(--font-ui);
   font-size: 13px;
-  color: var(--text-faint);
+  color: var(--text-muted);
   font-weight: 400;
 }
-.byline a {
-  color: var(--text-muted);
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
+.byline-name {
+  margin-right: 24px;
+  color: #8a8a8a;
+  font-weight: 500;
 }
-.byline a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.byline a {
+  color: #1155cc;
+  text-decoration: underline;
+  text-decoration-color: #1155cc;
+}
+.byline a:hover { color: #3e8382; text-decoration-color: #3e8382; }
 .byline .copy-email {
-  color: var(--text-muted);
+  color: #1155cc;
   font-size: inherit;
   font-weight: inherit;
-  text-decoration-color: var(--rule);
+  text-decoration-color: #1155cc;
 }
-.byline .copy-email:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.byline .copy-email:hover { color: #3e8382; text-decoration-color: #3e8382; }
 .byline .sep { color: var(--text-faint); }
 
 /* ---------- About page (separate /about route) ---------- */

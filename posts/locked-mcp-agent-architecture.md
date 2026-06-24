@@ -1,64 +1,54 @@
 ---
-title: "Locked MCP: Why Your Agent Should Have an Open Protocol but Not Free-Form SQL"
+title: "Locked MCP: Open Protocol, Not Free-Form SQL"
 date: 2026-06-17
-excerpt: "Most takes on MCP are either MCP for everything or MCP isn't ready. The senior call is what migrates and what doesn't."
+excerpt: "I sketched the architecture three times before I caught the trap. The version I landed on exposes MCP, but never lets the agent write SQL. Here's why."
 ---
 
-I lead data and AI for an enterprise agentic AI platform. Recently I've been thinking through how the architecture evolves from where we are today to where it should go. Sharing because the trade-offs matter, and most takes I see are either "MCP for everything" or "MCP isn't ready" — and the real answer is more interesting.
+> Every architecture decision sits between two pressures. With MCP, the one I underweighted at first was the difference between open protocol and open autonomy. They're orthogonal. Taking the protocol benefits doesn't require handing the agent a SQL keyboard.
 
-## The starting point: an agent is a router over heterogeneous tools
+I sketched the MCP architecture three times before I caught the trap.
 
-The product I'll reference here is a Product GTM Agent — embedded in seller Slack, helping AEs and CSMs reason over product-usage signals to figure out who to sell, when, and what next. It's an orchestrator. It doesn't do one thing. It picks from a set of capabilities — knowledge retrieval, customer-data lookup, ML-based account comparison, rule-based playbook recommendations, deal-sizing calculations — and chains them into a response.
+The agent I work on is a Product GTM Agent embedded in seller Slack. AEs and CSMs ask things like *who should I sell to next quarter,* *what changed in this customer's usage,* *what's the run rate on this contract.* The agent reasons over product-usage signals and chains capabilities: knowledge retrieval, customer-data lookup, ML lookalike comparison, rule-based playbook recommendations, deal-sizing calculations. It's not a chatbot. It's an orchestrator that picks the right tool, calls it, composes the answer.
 
-That's the senior framing of "what is an agent." Not a chatbot. Not a RAG system. **A router over heterogeneous tools.**
+Today, every tool is a bespoke integration. SageMaker for ML inference. Custom database wrappers for structured lookups. Vector DB calls for RAG. The integrations are fast and stable. Adding a new one is an engineering project, and every new one deepens our coupling to a single stack.
 
-Today, every tool is a bespoke integration. SageMaker for ML inference. Custom database wrappers for structured lookups. Vector DB calls for RAG. They work, they're fast, they're stable.
+So I sat down to plan the migration to MCP.
 
-But adding a new tool is an engineering project. And every new tool deepens our coupling to one stack.
+## First sketch: MCP for everything
 
-## Why MCP
+The first sketch was the obvious one. Wrap every tool in MCP. Expose them through the same protocol. The agent gets discoverability, the platform gets portability, switching LLMs becomes a config change.
 
-The Model Context Protocol (MCP) is the open standard for connecting AI agents to external tools and data. The pitch:
+Then I started costing it.
 
-- One protocol, any vendor, any LLM
-- Tools self-describe via schemas, docstrings, and capabilities
-- Agents discover tools at runtime instead of being hard-coded
+The SageMaker lookalike model is already the latency bottleneck. Wrapping it in MCP adds a protocol hop and serialization overhead for zero new capability. The deal-sizing calculator has its own auth and state — MCP wrapping it doesn't unlock anything, just adds a layer. The hot-path actions that don't change much (return customer ID, return contract status) would cost more to migrate than they earn back.
 
-For a future-state architecture, MCP is the right north star. Faster capability addition. Multi-LLM portability. Cleaner governance. Open ecosystem.
+The "MCP for everything" version assumed the protocol was free. It isn't.
 
-But "MCP for everything" is a junior take. The senior call is **what migrates and what doesn't.**
+## Second sketch: nothing changes
 
-## What stays bespoke
+The second sketch went the other way. Keep all the bespoke integrations. Don't migrate.
 
-Three workloads are better served by bespoke integration:
+That collapsed almost immediately when I looked at the queue. Every new metric the agent needs is a hand-written SQL inside a custom action. Customer journey funnel data, consumption breakdowns, knowledge search across docs — each one is an engineering ticket. The team's velocity is bounded by how fast we can stamp out new actions. The agent can answer only what we anticipated; everything else is a feature request.
 
-**ML model inference.** Lookalike models running on SageMaker — native integration is faster than wrapping the endpoint in MCP. ML inference is already the latency bottleneck. Don't add a protocol hop.
+The "nothing changes" version meant capping the agent's intelligence at our roadmap pace. Which means capping it well below what the data could actually answer.
 
-**Tight external app loops.** A deal-sizing calculator has its own auth, state, and call patterns. MCP wrapping it adds overhead without unlocking new capability.
+## Third sketch: Snowflake MCP, full schema, free SQL
 
-**Hot-path actions with stable surface area.** If a capability isn't going to grow or change much, the engineering cost of migration outweighs the benefit.
+The third sketch felt like the unlock. Stand up a Snowflake MCP server, expose the schema, let the agent compose queries on the fly. The agent can now answer anything the data can answer. Adding a new metric stops being an engineering ticket.
 
-## What migrates
+I started writing the design doc.
 
-Everything that's essentially "query a warehouse and return fields."
+Then I started writing the failure modes.
 
-Customer info lookup. Customer journey funnel data. Knowledge search. Use case retrieval. These all reduce to structured queries against Snowflake, vector databases, or curated data tables.
+Our users are quota-carrying sellers. A wrong number kills trust permanently — not for that query, for the whole product. Our consumption metrics have aggregation rules that aren't obvious from the schema: dedup logic across multi-contract accounts, schedule-elapsed checks for run-rate volatility, exclusions for trial usage, attribution rules for upsell credit. None of that lives in column names. It lives in the SQL we hand-wrote into the existing bespoke actions.
 
-The capability unlock is huge. Today, every metric is a hand-written SQL inside a custom action. Adding a new metric is an engineering ticket. With a Snowflake MCP server, the agent can answer **anything the data can answer** — not just the queries we anticipated.
+A free-form SQL agent doesn't know those rules. You can put them in the prompt, but you can't guarantee the agent applies them every time. And "every time" is the bar when one wrong number kills the product.
 
-## The trap I almost fell into
+The third sketch had to be wrong, even though it was the most exciting.
 
-When I sketched this out, my first instinct was: "Snowflake MCP server, expose the schema, let the agent compose queries on the fly. Massive capability expansion."
+## The version I landed on
 
-That's where I caught myself.
-
-Our users are quota-carrying sellers. A wrong number kills trust. Our consumption metrics have heavy nuance — aggregation rules, dedup, multi-contract handling, schedule-elapsed checks for run-rate volatility. There's no realistic way to teach a free-form SQL-composing agent all that nuance and trust it to apply it 100% of the time.
-
-So I changed the design.
-
-## Locked MCP
-
-The compromise: expose **only curated tools** via MCP. No free-form SQL.
+The compromise that emerged: keep MCP, but expose only curated tools through it. No free-form SQL.
 
 ```
 Snowflake MCP Server
@@ -72,49 +62,27 @@ Snowflake MCP Server
 └── (no run_query exposed)
 ```
 
-The agent picks the right tool based on the user's question and passes parameters. It never writes SQL.
+The agent picks the right tool based on the user's question and passes parameters. It never writes SQL. The business logic lives inside the tool implementation, governed and testable, in one place.
 
-This gives me MCP's benefits — open protocol, multi-LLM portability, multi-consumer reusability, faster long-tail capability addition — without the governance complexity of letting the agent compose queries.
+The protocol benefits stay: open standard, multi-LLM portability, multi-consumer reusability, faster long-tail capability addition. Adding a new curated tool to the MCP server is dramatically lighter than building a new bespoke action — it's a function signature, a SQL block, and a docstring, not a new integration. Other teams can consume the same server. Switching LLMs doesn't require rewriting integrations.
 
-## The trade-off this acknowledges
+What I gave up: the unbounded "agent answers anything in the data" capability. I'm still bounded to what I've curated, just like before MCP. The bound is the same. What changed is how much the bound costs to move.
 
-I lose the unbounded capability of "agent answers anything in the data." I'm still bounded to curated tools, just like today. But:
+## Where the boundary actually sits
 
-- Adding a curated tool to the MCP server is dramatically lighter than building a new bespoke action
-- Other teams (or other agents) can consume the same MCP server, decoupled from one product
-- Switching LLMs in the future doesn't require rewriting tool integrations
-- Business logic (CRR aggregation, funnel-stage rules) lives in one place, governed and testable
+The clearer way to see the architecture, after the three sketches:
 
-For a high-stakes field user, **bounded reliability beats unbounded capability.**
+- **Bespoke, native integration:** ML inference, tight external app loops, hot-path actions with stable surface area. Anywhere protocol overhead costs more than it earns.
+- **MCP with curated tools:** structured data lookups, knowledge retrieval, anything that's "query a warehouse and return fields" but has business logic that can't be schema-encoded.
+- **MCP with generic query (someday):** ad-hoc data exploration, but only after query validation, cost limits, schema scope, and row-level security exist. Stage 2, for trusted users, not the seller agent.
 
-## When I'd add generic SQL later
+Three integration patterns. One agent. The pattern is chosen by the workload, not by the protocol fashion.
 
-If clear demand emerges for ad-hoc data exploration, and after I've built the guardrails — query validation, cost limits, schema scope, row-level security — I'd add a `run_query` tool for power users. Stage 2.
+## What this changed in how I think
 
-But that's a maturity-stage decision, not a starting design.
+The first thing was where business logic lives. Before, business logic lived inside the agent's prompt or scattered across custom action implementations. After, it lives inside the MCP server's tool definitions — single source of truth for what CRR means, what "stuck in funnel" means, how dedup works. The agent doesn't carry the rules. The tool layer does.
 
-## Three things this taught me
+The second was the difference between an open protocol and open autonomy. They're orthogonal. MCP gives you the protocol benefits whether or not you give the agent a SQL keyboard. Choosing not to expose `run_query` doesn't cost you any MCP value. It just means the agent acts through doors you've checked, not doors you haven't.
 
-**1. Open protocol does not equal open autonomy.** MCP gives you the protocol benefits without forcing you to give the agent a SQL keyboard. You can have one without the other.
+The third was that the most exciting design isn't always the right starting point. Free-form SQL on Snowflake felt like the unlock the first time I saw it. It was. For internal data analysts. Not for an agent serving sellers whose trust budget is one wrong number.
 
-**2. Match the integration pattern to the workload.** Bespoke for ML inference and tight loops. MCP for structured data and growing surface areas. Don't migrate ideologically.
-
-**3. Encode discipline in the tool layer.** Business logic — aggregation rules, edge cases, post-processing — belongs inside curated tools, not in the agent's prompt. The MCP server becomes the source of truth for "what does CRR mean."
-
-## The framing I'm taking forward
-
-When I think about agent architecture now, the question isn't "is this RAG, or agentic, or tool-use?" It's:
-
-- Which capabilities are *bounded and high-frequency*? → Curated tools, latency-optimized.
-- Which capabilities are *growing surface areas*? → MCP-mediated, schema-aware.
-- Which capabilities are *long-tail and exploratory*? → Generic query, with guardrails, for trusted users only.
-
-A mature agent system isn't one architecture. It's three, layered, each chosen because the workload earns it.
-
-That's what I'd build today.
-
----
-
-*Part of an ongoing series on building enterprise AI systems. Previous: [eval as system design](./eval-as-system-design.md). Next: where the action dial sits — when to let the system act vs. keep humans in the loop.*
-
-*If you're working on enterprise agent architecture and wrestling with the same trade-offs, or you've made different calls and want to compare notes, I'd love to hear about it.*
