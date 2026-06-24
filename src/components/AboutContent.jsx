@@ -52,11 +52,11 @@ export default function AboutContent() {
       </div>
 
       <div className="about-links">
-        <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume (PDF)</a>
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
         <span className="sep">·</span>
-        <a href="https://www.linkedin.com/in/yichinlew" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/yichinlew" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <span className="sep">·</span>
-        <a href="https://github.com/lyichin" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://github.com/lyichin" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span className="sep">·</span>
         <CopyEmail />
       </div>
