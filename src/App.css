@@ -329,6 +329,7 @@
   font-size: 16px;
   line-height: 1.75;
   border-left: 2px solid var(--accent);
+  scroll-margin-top: calc(var(--nav-height) + 16px);
 }
 /* On multi-column layouts (tablet + desktop), push panel to end of grid
    so the row of cards stays intact. On 1-col mobile, leave at DOM order
@@ -489,6 +490,19 @@
   max-width: 680px;
   margin: 0 auto;
   padding: 64px var(--gutter);
+}
+.post-back {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 120ms ease;
+}
+.post-back:hover {
+  color: var(--accent);
 }
 .post-meta {
   font-family: var(--font-ui);

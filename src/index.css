@@ -75,6 +75,18 @@ button {
   text-align: left;
 }
 
+/* Keyboard focus ring — only shown for keyboard navigation, not mouse clicks.
+   :focus-visible is the modern selector for this. Uses the accent color
+   with a tight offset so it reads as a deliberate UI affordance, not noise. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
 img {
   max-width: 100%;
   height: auto;

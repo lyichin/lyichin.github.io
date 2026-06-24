@@ -1,12 +1,21 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { expertise } from '../data/expertise'
 
 export default function Expertise() {
   const [openNum, setOpenNum] = useState('')
+  const panelRef = useRef(null)
 
   // 4 chevrons live between the 5 cards. Each is positioned absolutely at
   // the boundary between two cards (20%, 40%, 60%, 80% of the row width).
   const chevronPositions = ['20%', '40%', '60%', '80%']
+
+  // When a card is expanded, scroll the panel into view below the sticky nav.
+  // Works at every breakpoint: scroll-margin-top in CSS handles the offset.
+  useEffect(() => {
+    if (openNum && panelRef.current) {
+      panelRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [openNum])
 
   return (
     <div className="expertise-wrap">
@@ -29,7 +38,7 @@ export default function Expertise() {
                 </div>
               </button>
               {isOpen && (
-                <div className="expertise-panel">
+                <div className="expertise-panel" ref={panelRef}>
                   <div className="expertise-panel-title">
                     {e.num} · {e.name}
                   </div>

@@ -18,6 +18,7 @@ export default function Post() {
 
   return (
     <article className="post">
+      <Link to="/notes" className="post-back">← All notes</Link>
       <div className="post-meta">{formatDate(post.date)}</div>
       <h1 className="post-title">{post.title}</h1>
       <div className="post-body">
