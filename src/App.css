@@ -330,6 +330,12 @@
   line-height: 1.75;
   border-left: 2px solid var(--accent);
 }
+/* On multi-column layouts (tablet + desktop), push panel to end of grid
+   so the row of cards stays intact. On 1-col mobile, leave at DOM order
+   (inline, directly under the tapped card) — see Expertise.jsx. */
+@media (min-width: 541px) {
+  .expertise-panel { order: 99; }
+}
 .expertise-panel-title {
   font-family: var(--font-ui);
   font-size: 12px;
