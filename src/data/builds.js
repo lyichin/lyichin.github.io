@@ -28,6 +28,6 @@ export const builds = [
     title: 'The math scanner I built for my son',
     outcome: '20 min → 20 sec, $5/200 pages.',
     story:
-      "My son brings home math practice pages. Checking 30 problems by hand takes 20 minutes; checking 100+ takes the whole evening. So I built a scanner. OCR via the Anthropic API extracts problems and item numbers, Python does the math locally, I get a mapped answer key in seconds. I priced it: about $5 per 200 pages. Same engineering instincts I use at work, scaled down. Different scene, same dial.",
+      "My son brings home math practice pages. Checking 30 problems by hand takes 20 minutes; checking 100+ takes the whole evening. So I built a scanner. OCR via the Anthropic API extracts problems and item numbers, Python does the math locally, mapped answer key in seconds. $5 per 200 pages. Same engineering instincts, applied at home. Different scene, even higher utility.",
   },
 ]
