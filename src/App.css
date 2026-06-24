@@ -48,6 +48,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-brand:hover {
   color: #2e6464;
@@ -73,6 +75,17 @@
 .nav-links a:hover,
 .nav-links a.active {
   color: #3e8382;
+}
+
+@media (max-width: 760px) {
+  .nav-inner { gap: 12px; }
+  .nav-brand { font-size: 16px; gap: 8px; }
+  .nav-mark { width: 22px; height: 22px; }
+  .nav-links { gap: 14px; font-size: 13px; }
+}
+@media (max-width: 420px) {
+  .nav-brand span { display: none; } /* keep favicon only on very small screens */
+  .nav-links { gap: 12px; }
 }
 
 /* ---------- Footer ---------- */
@@ -297,9 +310,9 @@
 }
 
 .expertise-panel {
+  grid-column: 1 / -1;
   background: var(--card-active-bg);
   padding: 28px 32px;
-  margin-top: 14px;
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.75;
