@@ -1,0 +1,90 @@
+:root {
+  /* Color palette */
+  --bg: #fafaf7;
+  --text: #1a1a1a;
+  --text-muted: #6b6b6b;
+  --text-faint: #a0a0a0;
+  --rule: #e5e5e0;
+  --card-bg: #f3f3ee;
+  --card-active-bg: #e9e9e2;
+  --accent: #b85c38;
+
+  /* Layout */
+  --max-width: 960px;
+  --gutter: 32px;
+  --nav-height: 64px;
+
+  /* Font stacks */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-ui: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Spectral', Georgia, 'Iowan Old Style', serif;
+
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--text-faint);
+  text-underline-offset: 3px;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+  color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
