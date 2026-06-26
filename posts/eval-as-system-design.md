@@ -1,6 +1,6 @@
 ---
 title: "Eval as System Design: Building the Quality Bar for a Product GTM Agent"
-date: 2026-05-30
+date: 2026-05-14
 excerpt: "The agent had to clear a gate, not pass a checkbox. The eval system that emerged graded the agent four ways, by two graders, against the failure modes users would actually hit."
 ---
 

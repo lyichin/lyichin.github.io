@@ -1,6 +1,6 @@
 ---
 title: "Locked MCP: Open Protocol, Not Free-Form SQL"
-date: 2026-06-17
+date: 2026-05-29
 excerpt: "I sketched the architecture three times before I caught the trap. The version I landed on exposes MCP, but never lets the agent write SQL. Here's why."
 ---
 
