@@ -5,7 +5,7 @@ export default function Notes() {
   return (
     <section className="section">
       <div className="container">
-        <h2 className="section-title">Notes</h2>
+        <h2 className="section-title">Field Notes</h2>
         <div className="notes-list">
           {posts.map((p) => (
             <article key={p.slug} className="note-row">

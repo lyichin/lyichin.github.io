@@ -9,9 +9,10 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="container">
-          <h1>AI Practice Notes</h1>
+          <h1>AI Builds</h1>
+          <div className="hero-byline">by YiChin Lew</div>
           <div className="hero-subtitle">
-            Building, thinking, and applying AI across work and life.
+            Building, shipping, and reflecting on AI across work and life.
           </div>
           <div className="hero-tags">
             Product Strategy · Enterprise AI · Everyday Systems
@@ -42,9 +43,9 @@ export default function Home() {
 
       <section className="section" id="notes">
         <div className="container">
-          <h2 className="section-title">Latest Notes</h2>
+          <h2 className="section-title">Latest Field Notes</h2>
           <div className="notes-list">
-            {posts.slice(0, 3).map((p) => (
+            {posts.slice(0, 5).map((p) => (
               <article key={p.slug} className="note-row">
                 <Link to={`/notes/${p.slug}`}>
                   <div className="note-meta">{formatDate(p.date)}</div>
@@ -55,7 +56,7 @@ export default function Home() {
             ))}
           </div>
           <div className="notes-more">
-            <Link to="/notes">View all notes →</Link>
+            <Link to="/notes">More field notes →</Link>
           </div>
         </div>
       </section>

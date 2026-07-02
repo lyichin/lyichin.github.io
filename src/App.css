@@ -120,7 +120,15 @@
   font-size: 52px;
   line-height: 1.05;
   letter-spacing: -0.025em;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+.hero-byline {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  color: #6b7280;
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
   font-weight: 400;
 }
 .hero-subtitle {
@@ -481,7 +489,7 @@
 }
 .notes-more a {
   text-decoration: none;
-  color: var(--text);
+  color: #6b7280;
 }
 .notes-more a:hover { color: var(--accent); }
 

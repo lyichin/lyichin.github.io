@@ -46,7 +46,7 @@ export default function Layout() {
             <a href="/#builds" onClick={scrollToSection('builds')}>Builds</a>
             <a href="/#expertise" onClick={scrollToSection('expertise')}>Expertise</a>
             <Link to="/about">About</Link>
-            <a href="/#notes" onClick={scrollToSection('notes')}>Notes</a>
+            <a href="/#notes" onClick={scrollToSection('notes')}>Field Notes</a>
           </nav>
         </div>
       </header>

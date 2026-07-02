@@ -41,10 +41,10 @@ export default function AboutContent() {
             learning, what surprised me, what I got wrong, and what I'd do
             differently. The same thinking shows up at home too. As a mom, I
             build small tools and workflows to solve everyday problems.
-            Different scene, same question.
+            Different scene, same instinct.
           </p>
 
-          <p><em>Less takes. More practice.</em></p>
+          <p><em>Build. Ship. Reflect.</em></p>
         </div>
         <div className="about-photo">
           <img src="/photo.jpg" alt="YiChin Lew" />
