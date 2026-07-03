@@ -41,13 +41,13 @@ const svg = `
   <!-- main headline -->
   <text x="90" y="290" font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="84" font-weight="400" fill="#1a1a1a" letter-spacing="-2">
-    AI Practice Notes
+    AI Atlas
   </text>
 
   <!-- subtitle (italic, Spectral-style serif) -->
   <text x="90" y="370" font-family="Spectral, Georgia, serif"
         font-size="36" font-style="italic" fill="#1a1a1a">
-    Building, thinking, and applying AI
+    Building, shipping, and reflecting on AI
   </text>
   <text x="90" y="420" font-family="Spectral, Georgia, serif"
         font-size="36" font-style="italic" fill="#1a1a1a">
