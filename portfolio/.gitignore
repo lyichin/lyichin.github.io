@@ -1,0 +1,25 @@
+node_modules/
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.ipynb_checkpoints/
+dist/
+build/
+*.egg-info/
+
+# ML / data artifacts
+data/raw/
+data/processed/
+*.ckpt
+*.pt
+*.bin
+*.safetensors
+wandb/
+mlruns/
+.cache/
