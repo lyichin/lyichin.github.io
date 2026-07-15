@@ -1,6 +1,6 @@
 ---
 title: "The Time-Saved Trap"
-date: 2026-06-30
+date: 2026-07-14
 excerpt: "The first metric I picked for AI transformation was the one that quietly worked against it."
 ---
 
