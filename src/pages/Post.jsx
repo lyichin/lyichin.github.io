@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 import { getPost, formatDate } from '../data/posts'
 import AuthorByline from '../components/AuthorByline'
 
@@ -22,7 +23,7 @@ export default function Post() {
       <div className="post-meta">{formatDate(post.date)}</div>
       <h1 className="post-title">{post.title}</h1>
       <div className="post-body">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
           {post.content}
         </ReactMarkdown>
       </div>

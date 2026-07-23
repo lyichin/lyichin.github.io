@@ -627,6 +627,206 @@
 .byline .copy-email:hover { color: #3e8382; text-decoration-color: #3e8382; }
 .byline .sep { color: var(--text-faint); }
 
+/* ---------- Field-note diagrams (MCP field note & later) ---------- */
+.mcp-fig {
+  margin: 32px 0;
+  font-family: var(--font-ui);
+}
+.mcp-fig figcaption {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* horizontal actor flow: human ⟷ client ⟷ server */
+.mcp-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.mcp-node {
+  flex: 1;
+  min-width: 132px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 11px 12px;
+}
+.mcp-node .role {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+}
+.mcp-node h4 {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+.mcp-node p {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+.mcp-node.is-client { border-color: #3e8382; }
+.mcp-node.is-server { border-color: #b07a2e; }
+.mcp-node.is-client .role { color: #3e8382; }
+.mcp-node.is-server .role { color: #b07a2e; }
+.mcp-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  min-width: 22px;
+  color: var(--text-faint);
+  font-size: 17px;
+}
+
+/* numbered step cards */
+.mcp-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 640px) { .mcp-steps { grid-template-columns: 1fr; } }
+.mcp-step {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+}
+.mcp-step .num {
+  position: absolute;
+  top: -13px;
+  left: 16px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+.mcp-step h4 {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 6px 0 6px 0;
+}
+.mcp-step p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.mcp-step code {
+  font-size: 12px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+}
+
+/* terminal command + approval-prompt mock */
+.mcp-term {
+  background: #1c1f26;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e6e8ec;
+  overflow-x: auto;
+}
+.mcp-term .prompt { color: #6fae9a; }
+.mcp-term .cmt { color: #7c8595; }
+.mcp-prompt {
+  margin-top: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: var(--font-ui);
+}
+.mcp-prompt .p-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.mcp-prompt .p-line {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.mcp-prompt .p-btns {
+  display: flex;
+  gap: 10px;
+}
+.mcp-prompt .btn {
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+}
+.mcp-prompt .btn.yes { background: var(--accent); color: #fff; }
+.mcp-prompt .btn.no { background: var(--bg); border: 1px solid var(--rule); color: var(--text-muted); }
+
+/* the three trust models, as a vertical ladder */
+.mcp-trust {
+  display: grid;
+  gap: 12px;
+}
+.mcp-trust-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.mcp-trust-row .badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 16px;
+}
+.mcp-trust-row.a .badge { background: #f3e2c4; color: #8a5a1a; }
+.mcp-trust-row.b .badge { background: #d7e6ea; color: #2f6a72; }
+.mcp-trust-row.c .badge { background: #d6ede3; color: #2b6b52; }
+.mcp-trust-row h4 {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 2px 0 4px 0;
+}
+.mcp-trust-row .who {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mcp-trust-row .who.no { color: #b03a3a; }
+.mcp-trust-row .who.yes { color: #2b6b52; }
+.mcp-trust-row p {
+  margin: 6px 0 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
 /* ---------- About page (separate /about route) ---------- */
 .about-page-section {
   padding-top: 48px;
