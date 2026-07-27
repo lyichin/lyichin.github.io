@@ -41,7 +41,7 @@ const svg = `
   <!-- main headline -->
   <text x="90" y="290" font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="84" font-weight="400" fill="#1a1a1a" letter-spacing="-2">
-    AI Atlas
+    My AI Atlas
   </text>
 
   <!-- subtitle (italic, Spectral-style serif) -->

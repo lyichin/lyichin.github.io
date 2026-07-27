@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="container">
-          <h1>AI Atlas</h1>
+          <h1>My AI Atlas</h1>
           <div className="hero-byline">by YiChin Lew</div>
           <div className="hero-subtitle">
             Building, shipping, and reflecting on AI across work and life.
