@@ -33,6 +33,15 @@ function parseFrontmatter(raw) {
   return { data, content }
 }
 
+// Parse a YYYY-MM-DD date as local time. `new Date('2026-05-28')` parses as
+// UTC midnight, which renders as the previous day in negative-offset zones
+// (e.g. Pacific), so build the date from its parts instead.
+function parseLocalDate(value) {
+  const m = String(value).match(/^(\d{4})-(\d{2})-(\d{2})/)
+  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
+  return new Date(value)
+}
+
 const posts = Object.entries(modules)
   .map(([path, raw]) => {
     const slug = path.replace('/posts/', '').replace(/\.md$/, '')
@@ -40,7 +49,7 @@ const posts = Object.entries(modules)
     return {
       slug,
       title: data.title || slug,
-      date: data.date ? new Date(data.date) : null,
+      date: data.date ? parseLocalDate(data.date) : null,
       excerpt: data.excerpt || '',
       content,
     }

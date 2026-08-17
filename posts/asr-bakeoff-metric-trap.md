@@ -1,6 +1,6 @@
 ---
 title: "ASR Bakeoff: The Experiment That Shaped the Architecture"
-date: 2026-06-25
+date: 2026-07-07
 excerpt: "I ran three voice models on real business audio. The standard metric said they were tied. The one I built reversed the winner by 15 points."
 ---
 

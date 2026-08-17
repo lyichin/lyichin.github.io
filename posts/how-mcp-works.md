@@ -1,6 +1,6 @@
 ---
 title: "MCP Behind the Scenes: What We're Actually Clicking Yes to"
-date: 2026-07-23
+date: 2026-08-17
 excerpt: "Most of us click through the MCP setup without reading it. There's no time. But each step we skip is doing a job, and read slowly they show a design that lets an AI do far more for us while keeping it in check."
 ---
 
